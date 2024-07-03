@@ -203,13 +203,13 @@ class Codec8e extends Codec {
     }
 
     /**
-     * Read 8 byte ioProperties
+     * Read 8 byte ioProperties (U-Int 64)
      */
     let ioCountInt64 = this.toInt(this.reader.ReadBytes(2));
 
     for (var i = 0; i < ioCountInt64; i++) {
       let property_id = this.toInt(this.reader.ReadBytes(2));
-      let value = this.reader.ReadDouble();
+      let value = this.reader.ReadUInt64();
       ioElement.push({
         id: property_id,
         value: value,
@@ -236,7 +236,7 @@ class Codec8e extends Codec {
     for (var i = 0; i < ioCountIntX; i++) {
       let property_id = this.toInt(this.reader.ReadBytes(2));
       let ioValueLength = this.toInt(this.reader.ReadBytes(2));
-      let value = this.toString(this.reader.ReadBytes(ioValueLength));
+      let value = (this.reader.ReadBytes(ioValueLength)).toString();
       ioElement.push({
         id: property_id,
         value: value,
